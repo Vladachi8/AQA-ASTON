@@ -6,12 +6,11 @@ public class Main {
         checkSumSign();
         printColor();
         compareNumbers();
-        compareSumTo10(16,5);
-        isPositive(-1);
-        isPositiveBoolean(0);
+        compareSumTo10(1,5);
+        isPositive(5);
+        isPositiveBoolean(-2);
         outputStringXtimes("gusli",3);
-        isLeapYear(2000);
-        System.out.println(isLeapYear(400));
+        isLeapYear(20);
     }
 
     public static void printThreeWords() {
@@ -56,7 +55,7 @@ public class Main {
 
     public static boolean compareSumTo10(int a, int b) {
         boolean result = (a + b >= 10 && a + b <= 20);
-        System.out.println(result);
+        System.out.println("Сумма чисел в диапазоне 10-20 " + result);
         return result;
     }
 
@@ -70,7 +69,7 @@ public class Main {
 
     public static boolean isPositiveBoolean(int a) {
         boolean result = (a < 0);
-        System.out.println(result);
+        System.out.println(a + " Отрицательное? - " + result);
         return result;
     }
 
@@ -82,7 +81,7 @@ public class Main {
 
     public static boolean isLeapYear(int year) {
         boolean result = (year % 400 == 0) || (year % 100 != 0 && year % 4 == 0);
-        System.out.println(result);
+        System.out.println(year + " високосный? - " + result);
         return result;
     }
 }
