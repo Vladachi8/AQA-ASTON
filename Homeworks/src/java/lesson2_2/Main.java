@@ -6,11 +6,9 @@ public class Main {
         checkSumSign();
         printColor();
         compareNumbers();
-        compareSumTo10(16,5); //Возвращает true\false
-//        System.out.println(compareSumTo10(16,5)); //Проверка boolean вывода
+        compareSumTo10(16,5);
         isPositive(-1);
         isPositiveBoolean(0);
-//        System.out.println(isPositiveBoolean(-5)); //Проверка boolean вывода
         outputStringXtimes("gusli",3);
         isLeapYear(2000);
         System.out.println(isLeapYear(400));
@@ -57,7 +55,9 @@ public class Main {
     }
 
     public static boolean compareSumTo10(int a, int b) {
-        return a + b >= 10 && a + b <= 20;
+        boolean result = (a + b >= 10 && a + b <= 20);
+        System.out.println(result);
+        return result;
     }
 
     public static void isPositive(int a) {
@@ -69,7 +69,9 @@ public class Main {
     }
 
     public static boolean isPositiveBoolean(int a) {
-        return a < 0;
+        boolean result = (a < 0);
+        System.out.println(result);
+        return result;
     }
 
     public static void outputStringXtimes(String str, int x) {
@@ -79,6 +81,8 @@ public class Main {
     }
 
     public static boolean isLeapYear(int year) {
-        return (year % 400 == 0) || (year % 100 != 0 && year % 4 == 0);
+        boolean result = (year % 400 == 0) || (year % 100 != 0 && year % 4 == 0);
+        System.out.println(result);
+        return result;
     }
 }
