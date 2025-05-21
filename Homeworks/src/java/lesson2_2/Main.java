@@ -1,16 +1,23 @@
 package lesson2_2;
 
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
         printThreeWords();
         checkSumSign();
         printColor();
         compareNumbers();
-        compareSumTo10(1,5);
+        compareSumTo10(1, 5);
         isPositive(5);
         isPositiveBoolean(-2);
-        outputStringXtimes("gusli",3);
+        outputStringXtimes("gusli", 3);
         isLeapYear(20);
+        invertElemMass();
+        fillArray();
+        multiplyLessThanSix();
+        fillDiagonalMatrix();
+        createArr(5, 3);
     }
 
     public static void printThreeWords() {
@@ -84,4 +91,74 @@ public class Main {
         System.out.println(year + " високосный? - " + result);
         return result;
     }
+
+    public static void invertElemMass() {
+        int[] arr = {1, 1, 0, 0, 1, 0, 1, 1, 0, 0};
+
+        System.out.println(Arrays.toString(arr) + " массив до");
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == 0) {
+                arr[i] = 1;
+            } else {
+                arr[i] = 0;
+            }
+        }
+        System.out.println(Arrays.toString(arr) + " после");
+    }
+
+    public static void fillArray() {
+        int[] arr = new int[100];
+        int i = 0;
+
+        while (i < arr.length) {
+            arr[i] = i + 1;
+            i++;
+        }
+        System.out.println(Arrays.toString(arr));
+    }
+
+    public static void multiplyLessThanSix() {
+        int[] arr = {1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1};
+
+        System.out.println(Arrays.toString(arr) + " массив до");
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = arr[i] < 6 ? arr[i] * 2 : arr[i];
+        }
+        System.out.println(Arrays.toString(arr) + " после");
+    }
+
+    public static void fillDiagonalMatrix() {
+        int[][] matrix = new int[5][5];
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (i == j) {
+                    matrix[i][j] = 1;
+                } else if (matrix.length - 1 - i == j) {
+                    matrix[i][j] = 1;
+                } else {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static int[] createArr(int len, int initialValue) {
+        int[] arr = new int[len];
+        int i = 0;
+        while (i < arr.length) {
+            arr[i] = initialValue;
+            i++;
+        }
+        System.out.println(Arrays.toString(arr));
+        return arr;
+    }
+
 }
