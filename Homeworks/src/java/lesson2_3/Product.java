@@ -20,6 +20,7 @@ public class Product {
     }
 
     protected void showInf() {
+        System.out.println();
         System.out.println("Название - " + this.name);
         System.out.println("Дата производства - " + this.productionDate);
         System.out.println("Производитель - " + this.fabricator);
@@ -96,9 +97,8 @@ public class Product {
         System.out.println();
         System.out.println("Задание 2 -> Массив товаров:");
 
-        for (int i = 0; i < productsArray.length; i++) {
-            System.out.println();
-            productsArray[i].showInf();
+        for (Product product : productsArray) {
+            product.showInf();
         }
     }
 }
