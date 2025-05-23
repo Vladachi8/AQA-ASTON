@@ -29,6 +29,16 @@ public class Product {
         System.out.println("Товар забронирован - " + this.isBooked);
     }
 
+    // Метод для вывода массива товаров
+    public static void printProductsArray(Product[] productsArray) {
+        System.out.println();
+        System.out.println("Задание 2 -> Массив товаров:");
+
+        for (Product product : productsArray) {
+            product.showInf();
+        }
+    }
+
     public static void main(String[] args) {
         Product product1 = new Product(
                 "Телевизор",
@@ -90,16 +100,6 @@ public class Product {
         );
 
         printProductsArray(productsArray);
-    }
-
-    // Метод для вывода массива товаров
-    public static void printProductsArray(Product[] productsArray) {
-        System.out.println();
-        System.out.println("Задание 2 -> Массив товаров:");
-
-        for (Product product : productsArray) {
-            product.showInf();
-        }
     }
 }
 
