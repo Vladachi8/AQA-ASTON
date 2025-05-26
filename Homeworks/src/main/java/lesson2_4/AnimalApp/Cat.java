@@ -6,7 +6,6 @@ public class Cat extends Animal {
     private boolean full = false;
     private int appetite;
 
-
     public Cat(String name) {
         super(name);
         catCount++;
@@ -30,7 +29,6 @@ public class Cat extends Animal {
         } else {
             System.out.println(name + " не может пробежать " + distance + " м. (максимум " + MAX_RUN_DISTANCE + "м.)");
         }
-
     }
 
     @Override
