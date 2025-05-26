@@ -16,11 +16,25 @@ public class AnimalApp {
         tuzik.run(37);
         bobik.run(501);
         pushistik.swim(100);
+
+        volnistik.eat(2);
+        Animal.addFood(20);
+
+        Cat[] cats = {
+                new Cat("Беляшик", 2),
+                new Cat("Мурзик", 28),
+                new Cat("Рыжик", 5),
+                new Cat("Коксик", 21),
+                new Cat("Вискис", 1)
+        };
+
+        Cat.feedCats(cats);
     }
 
     abstract static class Animal {
         protected String name;
         private static int animalCount = 0;
+        protected static int bowl = 10;
 
         public Animal(String name) {
             this.name = name;
@@ -29,6 +43,7 @@ public class AnimalApp {
 
         public abstract void run(int distance);
         public abstract void swim(int distance);
+        public abstract void eat(int eat);
 
         public static void getAnimalCount() {
             System.out.println("Создано " + animalCount + " животное(ых)");
@@ -37,14 +52,34 @@ public class AnimalApp {
         protected boolean isValidDistance(int distance) {
             return distance >= 0;
         }
+
+        public static void addFood(int add) {
+            if(add >= 0) {
+                System.out.println();
+                System.out.println("В миске было: " + bowl);
+                bowl+=add;
+                System.out.println("В миске после добавления: " + bowl);
+            } else {
+                System.out.println("Никаких отрицательных приростов!");
+            }
+        }
     }
 
     public static class Cat extends Animal {
         private static final int MAX_RUN_DISTANCE = 200;
         private static int catCount = 0;
+        private boolean full = false;
+        private int appetite;
+
 
         public Cat(String name) {
             super(name);
+            catCount++;
+        }
+
+        public Cat(String name, int appetite) {
+            super(name);
+            this.appetite = appetite;
             catCount++;
         }
 
@@ -70,6 +105,25 @@ public class AnimalApp {
 
         public static void getCatCount() {
             System.out.println("Создано " + catCount + " кот(ов)");
+        }
+
+        @Override
+        public void eat(int eat) {
+            System.out.println();
+            System.out.println("В миске " + bowl + " еды");
+            if (bowl >= eat) {
+                bowl -= eat;
+                full = true;
+                System.out.println(name + " съел " + eat + ", в миске осталось: " + bowl + ", сытость " + full);
+            } else {
+                System.out.println(name + "у eды не хватило, сытость " + full);
+            }
+        }
+
+        public static void feedCats(Cat[] cats) {
+            for (Cat cat : cats) {
+                cat.eat(cat.appetite);
+            }
         }
     }
 
@@ -114,6 +168,9 @@ public class AnimalApp {
         public static void getDogCount() {
             System.out.println("Создано " + dogCount + " собака(и)");
         }
+
+        @Override
+        public void eat(int eat) {};
     }
 }
 
