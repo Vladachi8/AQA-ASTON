@@ -1,5 +1,5 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.printf("First steps");
+        System.out.println("Начало");
     }
 }
