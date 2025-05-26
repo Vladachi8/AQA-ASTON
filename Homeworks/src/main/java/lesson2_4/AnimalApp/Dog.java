@@ -43,5 +43,5 @@ public class Dog extends Animal {
     }
 
     @Override
-    public void eat(int eat) {};
+    public void eat(Bowl bowl) {};
 }

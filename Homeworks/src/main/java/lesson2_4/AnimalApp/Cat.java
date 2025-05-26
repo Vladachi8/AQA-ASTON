@@ -43,21 +43,20 @@ public class Cat extends Animal {
     }
 
     @Override
-    public void eat(int eat) {
-        System.out.println();
-        System.out.println("В миске " + bowl + " еды");
-        if (bowl >= eat) {
-            bowl -= eat;
+    public void eat(Bowl bowl) {
+        System.out.println("\nВ миске " + bowl.getQuantity() + " еды");
+        if (bowl.getQuantity() >= appetite) {
+            bowl.decreaseFood(appetite);
             full = true;
-            System.out.println(name + " съел " + eat + ", в миске осталось: " + bowl + ", сытость " + full);
+            System.out.println(name + " съел " + appetite + ", в миске осталось: " + bowl.getQuantity() + ", сытость " + full);
         } else {
             System.out.println(name + "у eды не хватило, сытость " + full);
         }
     }
 
-    public static void feedCats(Cat[] cats) {
+    public static void feedCats(Cat[] cats, Bowl bowl) {
         for (Cat cat : cats) {
-            cat.eat(cat.appetite);
+            cat.eat(bowl);
         }
     }
 }
