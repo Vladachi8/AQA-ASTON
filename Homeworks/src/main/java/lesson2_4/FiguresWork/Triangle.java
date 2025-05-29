@@ -17,14 +17,13 @@ class Triangle extends Shape {
 
     @Override
     public double calculateArea() {
-        // Формула Герона
         double p = calculatePerimeter() / 2;
         return Math.sqrt(p * (p - sideA) * (p - sideB) * (p - sideC));
     }
 
     @Override
     public double calculatePerimeter() {
-        return sideA + sideB + sideC;
+        return calculateTrianglePerimeter(sideA, sideB, sideC);
     }
 
     @Override
