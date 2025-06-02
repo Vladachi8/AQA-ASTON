@@ -1,6 +1,6 @@
 package lesson2_4.FiguresWork;
 
-class Circle extends Shape {
+public class Circle extends Shape {
     private double radius;
     private String fillColor;
     private String borderColor;
