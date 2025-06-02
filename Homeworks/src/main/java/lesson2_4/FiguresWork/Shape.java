@@ -1,6 +1,6 @@
 package lesson2_4.FiguresWork;
 
-abstract class Shape implements FigureCount {
+public abstract class Shape implements FigureCount {
     public abstract double calculateArea();
     public abstract String showColor();
 

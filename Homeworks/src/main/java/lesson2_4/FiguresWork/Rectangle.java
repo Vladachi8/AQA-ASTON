@@ -1,6 +1,6 @@
 package lesson2_4.FiguresWork;
 
-class Rectangle extends Shape {
+public class Rectangle extends Shape {
     private double length;
     private double width;
     private String fillColor;

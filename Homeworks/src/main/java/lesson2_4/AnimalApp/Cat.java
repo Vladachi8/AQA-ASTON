@@ -4,16 +4,9 @@ public class Cat extends Animal {
     private static final int MAX_RUN_DISTANCE = 200;
     private static int catCount = 0;
     private boolean full = false;
-    private int appetite;
 
     public Cat(String name) {
         super(name);
-        catCount++;
-    }
-
-    public Cat(String name, int appetite) {
-        super(name);
-        this.appetite = appetite;
         catCount++;
     }
 
@@ -41,20 +34,21 @@ public class Cat extends Animal {
     }
 
     @Override
-    public void eat(Bowl bowl) {
+    public void eat(Bowl bowl, int amount) {
         System.out.println("\nВ миске " + bowl.getQuantity() + " еды");
-        if (bowl.getQuantity() >= appetite) {
-            bowl.decreaseFood(appetite);
+        if (bowl.getQuantity() >= amount) {
+            bowl.decreaseFood(amount);
             full = true;
-            System.out.println(name + " съел " + appetite + ", в миске осталось: " + bowl.getQuantity() + ", сытость " + full);
+            System.out.println(name + " съел " + amount + ", в миске осталось: " + bowl.getQuantity() + ", сытость " + full);
         } else {
             System.out.println(name + "у eды не хватило, сытость " + full);
         }
     }
 
     public static void feedCats(Cat[] cats, Bowl bowl) {
+        final int DEFAULT_FOOD_AMOUNT = 5;
         for (Cat cat : cats) {
-            cat.eat(bowl);
+            cat.eat(bowl, DEFAULT_FOOD_AMOUNT);
         }
     }
 }

@@ -6,7 +6,7 @@ public class Main {
         Animal tuzik = new Dog("Тузик");
         Animal barsik = new Dog("Барсик");
         Animal pushistik = new Cat("Пушистик");
-        Animal volnistik = new Cat("Волнистик", 6);
+        Animal volnistik = new Cat("Волнистик");
         Bowl bowl = new Bowl(10);
 
         Animal.getAnimalCount();
@@ -19,15 +19,15 @@ public class Main {
         pushistik.swim(100);
 
 
-        volnistik.eat(bowl);
-        bowl.addFood(30);
+        volnistik.eat(bowl,10);
+        bowl.addFood(21);
 
         Cat[] cats = {
-                new Cat("Беляшик", 2),
-                new Cat("Мурзик", 28),
-                new Cat("Рыжик", 5),
-                new Cat("Коксик", 4),
-                new Cat("Вискис", 1)
+                new Cat("Беляшик"),
+                new Cat("Мурзик"),
+                new Cat("Рыжик"),
+                new Cat("Коксик"),
+                new Cat("Вискис")
         };
 
         Cat.feedCats(cats,bowl);

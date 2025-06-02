@@ -43,5 +43,5 @@ public class Dog extends Animal {
     }
 
     @Override
-    public void eat(Bowl bowl) {}
+    public void eat(Bowl bowl, int amount) {}
 }

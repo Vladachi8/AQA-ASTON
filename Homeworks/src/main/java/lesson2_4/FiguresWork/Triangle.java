@@ -1,6 +1,6 @@
 package lesson2_4.FiguresWork;
 
-class Triangle extends Shape {
+public class Triangle extends Shape {
     private double sideA;
     private double sideB;
     private double sideC;
