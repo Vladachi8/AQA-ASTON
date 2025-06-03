@@ -8,7 +8,13 @@ public class ArrayChecker {
         }
     }
 
-    public static void checkArraySize(String[][] matrix) throws MyArraySizeException {
+    public static class MyArrayDataException extends Exception {
+        public MyArrayDataException(int row, int col, String value) {
+            super(String.format("Некорректные данные в ячейке [%d][%d]: '%s'", row, col, value));
+        }
+    }
+
+    public static int sumMatrixEl(String[][] matrix) throws MyArraySizeException, MyArrayDataException {
         if (matrix == null) {
             throw new MyArraySizeException("Массив не может быть null");
         }
@@ -22,5 +28,19 @@ public class ArrayChecker {
                 throw new MyArraySizeException("Массив не может содержать " + matrix[i].length + " столбец(ца)");
             }
         }
+
+        int sum = 0;
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                try {
+                    sum += Integer.parseInt(matrix[i][j]);
+                } catch (NumberFormatException e) {
+                    throw new MyArrayDataException(i, j, matrix[i][j]);
+                }
+            }
+        }
+
+        return sum;
     }
 }
