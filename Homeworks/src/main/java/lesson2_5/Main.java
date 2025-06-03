@@ -2,6 +2,15 @@ package lesson2_5;
 
 public class Main {
     public static void main(String[] args) {
+        int[] array = {1,2,3,4,5,6,7,8,9};
+
+        try {
+            array[9] = 10;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
+
         String[][] correctMatrix = {
                 {"1", "1", "1", "1"},
                 {"2", "2", "2", "2"},
@@ -37,7 +46,7 @@ public class Main {
 
     public static void doMatrix(String[][] matrix) {
         try {
-            System.out.println("Сумма матрицы: " + ArrayChecker.sumMatrixEl(matrix));
+            System.out.println("\nСумма матрицы: " + ArrayChecker.sumMatrixEl(matrix));
         } catch (ArrayChecker.MyArraySizeException e) {
             System.err.println("Ошибка размера массива: " + e.getMessage());
         } catch (ArrayChecker.MyArrayDataException e) {
