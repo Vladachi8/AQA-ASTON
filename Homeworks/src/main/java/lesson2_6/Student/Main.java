@@ -7,20 +7,20 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) {
         Map<String, Integer> grades1 = Map.of(
-                "Математика", 7,
-                "Русский язык", 6,
-                "Физика", 9,
-                "История", 10,
-                "Физкультура", 8,
-                "Английский язык", 6
+                "Математика", 4,
+                "Русский язык", 4,
+                "Физика", 4,
+                "История", 4,
+                "Физкультура", 4,
+                "Английский язык", 4
         );
         Map<String, Integer> grades2 = Map.of(
                 "Математика", 4,
                 "Русский язык", 5,
                 "Физика", 4,
                 "История", 5,
-                "Физкультура", 6,
-                "Английский язык", 7
+                "Физкультура", 4,
+                "Английский язык", 4
         );
         Map<String, Integer> grades3 = Map.of(
                 "Математика", 4,
@@ -31,7 +31,7 @@ public class Main {
                 "Английский язык", 4
         );
         Map<String, Integer> grades4 = Map.of(
-                "Математика", 6,
+                "Математика", 4,
                 "Русский язык", 8,
                 "Физика", 9,
                 "История", 10,
@@ -42,7 +42,7 @@ public class Main {
                 "Математика", 8,
                 "Русский язык", 9,
                 "Физика", 9,
-                "История", 10,
+                "История", 9,
                 "Физкультура", 8,
                 "Английский язык", 9
         );
@@ -65,6 +65,21 @@ public class Main {
             System.out.println(student);
         }
 
-        System.out.println(student1.calculateAverageGrade());
+        for (Student student : students) {
+            System.out.println(student.calculateAverageGrade());
+        }
+
+//        System.out.println(student1.calculateAverageGrade());
+//        System.out.println(student2.calculateAverageGrade());
+//        System.out.println(student3.calculateAverageGrade());
+//        System.out.println(student4.calculateAverageGrade());
+//        System.out.println(student5.calculateAverageGrade());
+
+        Student.increaseCourseGoodGradesStudent(students);
+        Student.deleteBadGradesStudent(students);;
+
+        for (Student student : students) {
+            System.out.println(student);
+        }
     }
 }

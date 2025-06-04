@@ -1,6 +1,8 @@
 package lesson2_6.Student;
 
+import java.util.List;
 import java.util.Map;
+import java.text.DecimalFormat;
 
 public class Student {
     private String name;
@@ -17,6 +19,14 @@ public class Student {
         this.grades = grades;
     }
 
+    public int getCourse() {
+        return course;
+    }
+
+    public void setCourse(int course) {
+        this.course = course;
+    }
+
     @Override
     public String toString() {
         return String.format(
@@ -30,13 +40,18 @@ public class Student {
             return 0.0;
         }
 
-        int sum = 0;
-        double averrage;
-        for (int grade : grades.values()) {
-            sum += grade;
-        }
-        averrage = sum / grades.size();
+    }
 
-        return (double) Math.round(averrage * 10) / 10.0;
+    //Удаление студента со средним баллом ниже 5, взята 10и бальная система
+    public static void deleteBadGradesStudent(List<Student> students) {
+        students.removeIf(student -> student.calculateAverageGrade() < 5);
+    }
+
+    public static void increaseCourseGoodGradesStudent(List<Student> students) {
+        for (Student student : students) {
+            if (student.calculateAverageGrade() >= 5) {
+                student.setCourse(student.getCourse() + 1);
+            }
+        }
     }
 }
