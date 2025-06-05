@@ -1,8 +1,6 @@
 package lesson2_6.Student;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -25,7 +23,7 @@ public class Main {
         Map<String, Integer> grades3 = Map.of(
                 "Математика", 4,
                 "Русский язык", 7,
-                "Физика", 9,
+                "Физика", 7,
                 "История", 4,
                 "Физкультура", 4,
                 "Английский язык", 4
@@ -43,11 +41,11 @@ public class Main {
                 "Русский язык", 9,
                 "Физика", 9,
                 "История", 9,
-                "Физкультура", 8,
+                "Физкультура", 9,
                 "Английский язык", 9
         );
 
-        List<Student> students = new ArrayList<>();
+        Set<Student> students = new HashSet<>();
 
         Student student1 = new Student("Артем", 22, 4, "35pm", grades1);
         Student student2 = new Student("Ирина", 20, 2, "12pk", grades2);
@@ -69,17 +67,21 @@ public class Main {
             System.out.println(student.calculateAverageGrade());
         }
 
-//        System.out.println(student1.calculateAverageGrade());
-//        System.out.println(student2.calculateAverageGrade());
-//        System.out.println(student3.calculateAverageGrade());
-//        System.out.println(student4.calculateAverageGrade());
-//        System.out.println(student5.calculateAverageGrade());
-
         Student.increaseCourseGoodGradesStudent(students);
-        Student.deleteBadGradesStudent(students);;
+        Student.deleteBadGradesStudent(students);
 
         for (Student student : students) {
             System.out.println(student);
+        }
+
+        printStudents(students, 4);
+    }
+
+    public static void printStudents(Set<Student> students, int course) {
+        for (Student student : students) {
+            if (student.getCourse() == course) {
+                System.out.println(student.getName());
+            }
         }
     }
 }
