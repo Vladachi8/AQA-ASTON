@@ -14,7 +14,6 @@ public class Main {
         System.out.println("330 - 30 = " + ArithmeticOperations.subtract(330, 30));
         System.out.println("2 * 100 = " + ArithmeticOperations.multiply(2, 100));
         System.out.println("21 / 3 = " + ArithmeticOperations.divide(21, 3));
-
         System.out.println(NumberComparator.compare(500, 2));
     }
 }
