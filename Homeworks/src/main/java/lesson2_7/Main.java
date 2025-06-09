@@ -5,7 +5,6 @@ public class Main {
         try {
             Factorial.factorial(-1);
         } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
             e.printStackTrace();
         }
 
