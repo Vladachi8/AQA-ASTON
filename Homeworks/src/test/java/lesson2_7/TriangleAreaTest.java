@@ -1,10 +1,12 @@
 package lesson2_7;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TriangleAreaTest {
+    @DisplayName("Площадь треугольника")
     @ParameterizedTest
     @CsvSource({
             "10,20,100",
@@ -16,6 +18,7 @@ class TriangleAreaTest {
         assertEquals(expectedArea, actualArea);
     }
 
+    @DisplayName("Проверка на ноль или отрицательный ввод")
     @ParameterizedTest
     @CsvSource({
             "-2, 6",

@@ -1,12 +1,13 @@
 package lesson2_7;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArithmeticOperationsTest {
-
+    @DisplayName("Сумма двух чисел")
     @ParameterizedTest
     @CsvSource({
             "10,5,15",
@@ -18,6 +19,7 @@ class ArithmeticOperationsTest {
         assertEquals(sum, ArithmeticOperations.add(a, b));
     }
 
+    @DisplayName("Вычитание двух чисел")
     @ParameterizedTest
     @CsvSource({
             "10,5,5",
@@ -29,6 +31,7 @@ class ArithmeticOperationsTest {
         assertEquals(rez, ArithmeticOperations.subtract(a, b));
     }
 
+    @DisplayName("Умножение двух чисел")
     @ParameterizedTest
     @CsvSource({
             "10,5,50",
@@ -40,6 +43,7 @@ class ArithmeticOperationsTest {
         assertEquals(rez, ArithmeticOperations.multiply(a, b));
     }
 
+    @DisplayName("Деление двух чисел")
     @ParameterizedTest
     @CsvSource({
             "10,5,2",
@@ -51,6 +55,7 @@ class ArithmeticOperationsTest {
         assertEquals(rez, ArithmeticOperations.divide(a, b));
     }
 
+    @DisplayName("Деление на 0")
     @Test
     void testDivisionByZero() {
         assertThrows(ArithmeticException.class,
