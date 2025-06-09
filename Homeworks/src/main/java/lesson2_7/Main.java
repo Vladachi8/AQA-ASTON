@@ -2,7 +2,13 @@ package lesson2_7;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Факториал 10: " + Factorial.factorial(-1));
+        try {
+            Factorial.factorial(-1);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Факториал 10: " + Factorial.factorial(10));
         System.out.println("Площадь треугольника: " + TriangleArea.calculateArea(6, 3));
 
         System.out.println("4 + 6 = " + ArithmeticOperations.add(4, 6));
