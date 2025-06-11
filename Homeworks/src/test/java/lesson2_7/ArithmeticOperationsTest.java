@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArithmeticOperationsTest {
+    ArithmeticOperations operationsTest = new ArithmeticOperations();
     @DisplayName("Сумма двух чисел")
     @ParameterizedTest
     @CsvSource({
@@ -16,7 +17,7 @@ class ArithmeticOperationsTest {
             "-1,1,0"
     })
     void testAdd(int a, int b, int sum) {
-        assertEquals(sum, ArithmeticOperations.add(a, b));
+        assertEquals(sum, operationsTest.add(a, b));
     }
 
     @DisplayName("Вычитание двух чисел")
@@ -28,7 +29,7 @@ class ArithmeticOperationsTest {
             "-1,1,-2"
     })
     void testSubtract(int a, int b, int rez) {
-        assertEquals(rez, ArithmeticOperations.subtract(a, b));
+        assertEquals(rez, operationsTest.subtract(a, b));
     }
 
     @DisplayName("Умножение двух чисел")
@@ -40,7 +41,7 @@ class ArithmeticOperationsTest {
             "-1,1,-1"
     })
     void testMultiply(int a, int b, int rez) {
-        assertEquals(rez, ArithmeticOperations.multiply(a, b));
+        assertEquals(rez, operationsTest.multiply(a, b));
     }
 
     @DisplayName("Деление двух чисел")
@@ -52,13 +53,13 @@ class ArithmeticOperationsTest {
             "-1,1,-1"
     })
     void testDivide(int a, int b, double rez) {
-        assertEquals(rez, ArithmeticOperations.divide(a, b));
+        assertEquals(rez, operationsTest.divide(a, b));
     }
 
     @DisplayName("Деление на 0")
     @Test
     void testDivisionByZero() {
         assertThrows(ArithmeticException.class,
-                () -> ArithmeticOperations.divide(13, 0));
+                () -> operationsTest.divide(13, 0));
     }
 }

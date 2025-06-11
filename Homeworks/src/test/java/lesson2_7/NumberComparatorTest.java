@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 class NumberComparatorTest {
+    NumberComparator compTest = new NumberComparator();
     @DisplayName("Сравнение двух чисел")
     @ParameterizedTest
     @CsvSource({
@@ -15,7 +16,7 @@ class NumberComparatorTest {
             "100, 5, '100 больше 5'"
     })
     void testCompare(int a, int b, String expected) {
-        assertEquals(expected, NumberComparator.compare(a, b));
+        assertEquals(expected, compTest.compare(a, b));
     }
 
 }

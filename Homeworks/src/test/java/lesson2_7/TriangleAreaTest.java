@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TriangleAreaTest {
+    TriangleArea areaTest = new TriangleArea();
     @DisplayName("Площадь треугольника")
     @ParameterizedTest
     @CsvSource({
@@ -14,7 +15,7 @@ class TriangleAreaTest {
             "35,82,1435"
     })
     void testTriangleArea(double base, double height, double expectedArea) {
-        double actualArea = TriangleArea.calculateArea(base, height);
+        double actualArea = areaTest.calculateArea(base, height);
         assertEquals(expectedArea, actualArea);
     }
 
@@ -28,6 +29,6 @@ class TriangleAreaTest {
     })
     void testTriangleAreaInvalidInput(double base, double height) {
         assertThrows(IllegalArgumentException.class,
-                () -> TriangleArea.calculateArea(base, height));
+                () -> areaTest.calculateArea(base, height));
     }
 }

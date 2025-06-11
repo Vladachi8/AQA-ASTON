@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FactorialTest {
+    Factorial newFactorialTest = new Factorial();
     @DisplayName("Факторил числа")
     @ParameterizedTest
     @CsvSource({
@@ -16,7 +17,7 @@ class FactorialTest {
             "10, 3628800"
     })
     void testFactorialValidInput(int input, long expected) {
-        assertEquals(expected, Factorial.factorial(input));
+        assertEquals(expected, newFactorialTest.factorial(input));
     }
 
     @DisplayName("Проверка на отрицательные числа")
@@ -24,6 +25,6 @@ class FactorialTest {
     @ValueSource(ints = {-1, -7, -200})
     void testFactorialInvalidInput(int input) {
         assertThrows(IllegalArgumentException.class,
-                () -> Factorial.factorial(input));
+                () -> newFactorialTest.factorial(input));
     }
 }
