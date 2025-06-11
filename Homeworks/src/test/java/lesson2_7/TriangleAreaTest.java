@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public class TriangleAreaTest {
+    TriangleArea areaTest = new TriangleArea();
     @DataProvider(name = "data")
     public Object[][] getData() {
         return new Object[][]{
@@ -16,7 +17,7 @@ public class TriangleAreaTest {
 
     @Test(dataProvider = "data")
     public void testArea(double a, double b, double expectedArea) {
-        assertEquals(TriangleArea.calculateArea(a,b), expectedArea);
+        assertEquals(areaTest.calculateArea(a,b), expectedArea);
     }
 
     @DataProvider(name = "dataNegative")
@@ -31,6 +32,6 @@ public class TriangleAreaTest {
 
     @Test(dataProvider = "dataNegative",expectedExceptions = IllegalArgumentException.class)
     public void testTriangleAreaInvalidInput(double a, double b) {
-        TriangleArea.calculateArea(a,b);
+        areaTest.calculateArea(a,b);
     }
 }

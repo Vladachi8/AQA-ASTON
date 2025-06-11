@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public class ArithmeticOperationsTest {
+    ArithmeticOperations operationsTest = new ArithmeticOperations();
     @DataProvider(name = "dataAdd")
     public Object[][] getDataAdd() {
         return new Object[][]{
@@ -17,7 +18,7 @@ public class ArithmeticOperationsTest {
 
     @Test(dataProvider = "dataAdd")
     public void testAdd(int a, int b, int expected) {
-        assertEquals(ArithmeticOperations.add(a,b), expected);
+        assertEquals(operationsTest.add(a,b), expected);
     }
 
     @DataProvider(name = "dataSubtract")
@@ -32,7 +33,7 @@ public class ArithmeticOperationsTest {
 
     @Test(dataProvider = "dataSubtract")
     public void testSubtract(int a, int b, int expected) {
-        assertEquals(ArithmeticOperations.subtract(a,b), expected);
+        assertEquals(operationsTest.subtract(a,b), expected);
     }
 
     @DataProvider(name = "dataMultiply")
@@ -47,7 +48,7 @@ public class ArithmeticOperationsTest {
 
     @Test(dataProvider = "dataMultiply")
     public void testMultiply(int a, int b, int expected) {
-        assertEquals(ArithmeticOperations.multiply(a,b), expected);
+        assertEquals(operationsTest.multiply(a,b), expected);
     }
 
     @DataProvider(name = "dataDivide")
@@ -62,11 +63,11 @@ public class ArithmeticOperationsTest {
 
     @Test(dataProvider = "dataDivide")
     public void testDivide(int a, int b, double expected) {
-        assertEquals(ArithmeticOperations.divide(a,b), expected);
+        assertEquals(operationsTest.divide(a,b), expected);
     }
 
     @Test(expectedExceptions = ArithmeticException.class)
     public void testDivisionByZero() {
-        ArithmeticOperations.divide(13, 0);
+        operationsTest.divide(13, 0);
     }
 }

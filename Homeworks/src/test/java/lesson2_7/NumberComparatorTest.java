@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public class NumberComparatorTest {
+    NumberComparator compTest = new NumberComparator();
     @DataProvider(name = "data")
     public Object[][] getData() {
         return new Object[][]{
@@ -18,6 +19,6 @@ public class NumberComparatorTest {
 
     @Test(dataProvider = "data")
     public void testFactorial(int a, int b, String expected) {
-        assertEquals(NumberComparator.compare(a,b), expected);
+        assertEquals(compTest.compare(a,b), expected);
     }
 }

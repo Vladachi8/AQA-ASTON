@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public class FactorialTest {
+    Factorial newFactorialTest = new Factorial();
     @DataProvider(name = "data")
     public Object[][] getData() {
         return new Object[][]{
@@ -17,11 +18,11 @@ public class FactorialTest {
 
     @Test(dataProvider = "data")
     public void testFactorial(int a, int expected) {
-        assertEquals(Factorial.factorial(a), expected);
+        assertEquals(newFactorialTest.factorial(a), expected);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testNegativeInput() {
-        Factorial.factorial(-1);
+        newFactorialTest.factorial(-1);
     }
 }
