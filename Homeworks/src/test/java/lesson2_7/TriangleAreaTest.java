@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TriangleAreaTest {
     TriangleArea areaTest = new TriangleArea();
+
     @DisplayName("Площадь треугольника")
     @ParameterizedTest
     @CsvSource({

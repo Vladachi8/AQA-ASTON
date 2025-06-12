@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ArithmeticOperationsTest {
     ArithmeticOperations operationsTest = new ArithmeticOperations();
+
     @DisplayName("Сумма двух чисел")
     @ParameterizedTest
     @CsvSource({

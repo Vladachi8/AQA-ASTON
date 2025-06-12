@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FactorialTest {
     Factorial newFactorialTest = new Factorial();
+
     @DisplayName("Факторил числа")
     @ParameterizedTest
     @CsvSource({
