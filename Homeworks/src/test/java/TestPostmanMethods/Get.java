@@ -13,8 +13,10 @@ public class Get {
                 .baseUri("https://postman-echo.com")
                 .queryParam("foo1", "bar1")
                 .queryParam("foo2", "bar2")
+
                 .when()
                 .get(BASE_URL + "/cookies")
+
                 .then()
                 .statusCode(200);
     }
