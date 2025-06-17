@@ -33,12 +33,19 @@ public class MtsOnline {
 
     @Test
     public void testBlockTitle() {
-        By blockTitleLocator = By.xpath("//div[@class='pay__wrapper']/h2[contains(text(), 'Онлайн пополнение без комиссии')]");
+        try {
+            By cookieAcceptButton = By.xpath("//div[@class='cookie__buttons']/button[@id='cookie-agree'][contains(text(), 'Принять')]");
+            wait.until(ExpectedConditions.elementToBeClickable(cookieAcceptButton)).click();
+        } catch (Exception e) {
+            System.out.println("Окно куки не найдено");
+        }
+
+        By blockTitleLocator = By.xpath("//div[@class='pay__wrapper']/h2[contains(., 'Онлайн пополнение без комиссии')]");
         WebElement blockTitle = wait.until(ExpectedConditions.visibilityOfElementLocated(blockTitleLocator));
 
-        String expectedTitle = "Онлайн пополнение без комиссии";
+        System.out.println("Найден заголовок: " + blockTitle.getText());
+        String expectedTitle = "Онлайн пополнение\nбез комиссии";
         String actualTitle = blockTitle.getText();
-
         assertEquals(expectedTitle, actualTitle, "Название блока не соответствует ожидаемому");
     }
 
