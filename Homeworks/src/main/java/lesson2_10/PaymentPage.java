@@ -1,7 +1,6 @@
 package lesson2_10;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,9 +8,10 @@ import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PaymentPage extends BasePage {
     @FindBy(xpath = "//div[@class='pay__wrapper']/h2")
@@ -32,6 +32,33 @@ public class PaymentPage extends BasePage {
     @FindBy(id = "connection-email")
     private WebElement emailInput;
 
+    @FindBy(id = "internet-phone")
+    private WebElement subscriberPhoneInput;
+
+    @FindBy(id = "internet-sum")
+    private WebElement internetAmountInput;
+
+    @FindBy(id = "internet-email")
+    private WebElement internetEmailInput;
+
+    @FindBy(id = "score-instalment")
+    private WebElement scoreInstalmentInput;
+
+    @FindBy(id = "instalment-sum")
+    private WebElement instalmentSumInput;
+
+    @FindBy(id = "instalment-email")
+    private WebElement instalmentEmailInput;
+
+    @FindBy(id = "score-arrears")
+    private WebElement scoreArrearsInput;
+
+    @FindBy(id = "arrears-sum")
+    private WebElement arrearsSumInput;
+
+    @FindBy(id = "arrears-email")
+    private WebElement arrearsEmailInput;
+
     @FindBy(xpath = "//div[@class='pay__wrapper']//button[contains(., 'Продолжить')]")
     private WebElement continueButton;
 
@@ -40,6 +67,9 @@ public class PaymentPage extends BasePage {
 
     @FindBy(xpath = "//div[@class='app-wrapper__content']")
     private WebElement paymentPopup;
+
+    @FindBy(xpath  = "//div[@class='select__wrapper']/button")
+    private WebElement servicesDropdown;
 
     public PaymentPage(WebDriver driver) {
         super(driver);
@@ -87,6 +117,36 @@ public class PaymentPage extends BasePage {
         } finally {
             driver.switchTo().defaultContent();
         }
+    }
+
+    public void selectService(String serviceName) {
+        servicesDropdown.click();
+        WebElement option = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
+                        String.format("//ul[@class='select__list']/li[contains(., '%s')]", serviceName))
+        ));
+        option.click();
+    }
+
+    public Map<String, String> getFieldPlaceholders() {
+        Map<String, String> placeholders = new HashMap<>();
+
+        placeholders.put("Телефон", phoneInput.getAttribute("placeholder"));
+        placeholders.put("Сумма", amountInput.getAttribute("placeholder"));
+        placeholders.put("Email", emailInput.getAttribute("placeholder"));
+
+        placeholders.put("Номер абонента", subscriberPhoneInput.getAttribute("placeholder"));
+        placeholders.put("Сумма домашнего интернета", internetAmountInput.getAttribute("placeholder"));
+        placeholders.put("E-mail домашнего интернета", internetEmailInput.getAttribute("placeholder"));
+
+        placeholders.put("Номер счета на 44", scoreInstalmentInput.getAttribute("placeholder"));
+        placeholders.put("Сумма рассрочки", instalmentSumInput.getAttribute("placeholder"));
+        placeholders.put("E-mail рассрочки", instalmentEmailInput.getAttribute("placeholder"));
+
+        placeholders.put("Номер счета на 2073", scoreArrearsInput.getAttribute("placeholder"));
+        placeholders.put("Сумма задолженности", arrearsSumInput.getAttribute("placeholder"));
+        placeholders.put("E-mail задолженности", arrearsEmailInput.getAttribute("placeholder"));
+
+        return placeholders;
     }
 }
 

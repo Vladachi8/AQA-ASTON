@@ -4,6 +4,9 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MtsOnlineTest {
@@ -67,6 +70,59 @@ public class MtsOnlineTest {
         paymentPage.fillPaymentForm("297777777", "1", "RibkaKus@gmail.com");
         assertTrue(paymentPage.isContinueButtonEnabled(),"Кнопка должна быть активна после заполнения формы");
         paymentPage.clickContinueButton();
+        assertTrue(paymentPage.isPaymentPopupDisplayed(),
+                "Попап оплаты должен отображаться после нажатия кнопки 'Продолжить'");
+    }
+
+    @Test
+    public void testCommunicationServicesPlaceholders() {
+        paymentPage.selectService("Услуги связи");
+        Map<String, String> placeholders = paymentPage.getFieldPlaceholders();
+
+        assertAll(
+                () -> assertEquals("Номер телефона", placeholders.get("Телефон"),
+                        "Неверный плейсхолдер для телефона"),
+                () -> assertEquals("Сумма", placeholders.get("Сумма"),
+                        "Неверный плейсхолдер для суммы"),
+                () -> assertEquals("E-mail для отправки чека", placeholders.get("Email"),
+                        "Неверный плейсхолдер для email")
+        );
+    }
+
+    @Test
+    public void testHomeInternetPlaceholders() {
+        paymentPage.selectService("Домашний интернет");
+        Map<String, String> placeholders = paymentPage.getFieldPlaceholders();
+
+        assertAll(
+                () -> assertEquals("Номер абонента", placeholders.get("Номер абонента")),
+                () -> assertEquals("Сумма", placeholders.get("Сумма домашнего интернета")),
+                () -> assertEquals("E-mail для отправки чека", placeholders.get("E-mail домашнего интернета"))
+        );
+    }
+
+    @Test
+    public void testInstallmentPlaceholders() {
+        paymentPage.selectService("Рассрочка");
+        Map<String, String> placeholders = paymentPage.getFieldPlaceholders();
+
+        assertAll(
+                () -> assertEquals("Номер счета на 44", placeholders.get("Номер счета на 44")),
+                () -> assertEquals("Сумма", placeholders.get("Сумма рассрочки")),
+                () -> assertEquals("E-mail для отправки чека", placeholders.get("E-mail рассрочки"))
+        );
+    }
+
+    @Test
+    public void testDebtPlaceholders() {
+        paymentPage.selectService("Задолженность");
+        Map<String, String> placeholders = paymentPage.getFieldPlaceholders();
+
+        assertAll(
+                () -> assertEquals("Номер счета на 2073", placeholders.get("Номер счета на 2073")),
+                () -> assertEquals("Сумма", placeholders.get("Сумма задолженности")),
+                () -> assertEquals("E-mail для отправки чека", placeholders.get("E-mail задолженности"))
+        );
     }
 
     @AfterEach
