@@ -126,16 +126,17 @@ public class PaymentBlock extends BasePage {
 
     public void selectService(String serviceName) {
         actions.moveToElement(servicesDropdown)
-                .pause(300)
+                .pause(500)
                 .click()
                 .pause(500)
+                .build()
                 .perform();
 
         WebElement option = wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath(String.format("//ul[@class='select__list']/li[contains(., '%s')]", serviceName))));
 
         actions.moveToElement(option)
-                .pause(300)
+                .pause(500)
                 .click()
                 .pause(500)
                 .perform();

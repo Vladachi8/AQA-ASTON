@@ -5,9 +5,7 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
-
 import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MtsOnlineTest {
@@ -31,10 +29,9 @@ public class MtsOnlineTest {
         driver = new ChromeDriver();
         actions = new Actions(driver);
         driver.manage().window().maximize();
-//        driver.get("https://www.mts.by/");
         mainPage = new MainPage(driver, actions);
         paymentBlock = new PaymentBlock(driver, actions);
-        bepaidIframe = new BepaidIframe(driver,actions);
+        bepaidIframe = new BepaidIframe(driver, actions);
 
         actions.pause(1000)
                 .build()
@@ -137,7 +134,7 @@ public class MtsOnlineTest {
     }
 
     @Test
-    public void testPaymentPrice() {
+    public void testPaymentPriceTitle() {
         paymentBlock.fillPaymentForm(PHONE, AMOUNT, EMAIL);
         paymentBlock.clickContinueButton();
 
@@ -147,6 +144,54 @@ public class MtsOnlineTest {
         assertEquals(expectedTitle, actualTitle, "Название блока не соответствует ожидаемому");
     }
 
+    @Test
+    public void testPaymentPriceButton() {
+        paymentBlock.fillPaymentForm(PHONE, AMOUNT, EMAIL);
+        paymentBlock.clickContinueButton();
+
+        String expectedTitle = "Оплатить " + AMOUNT + " BYN";
+        String actualTitle = bepaidIframe.getButtonAmount();
+
+        assertEquals(expectedTitle, actualTitle, "Название блока не соответствует ожидаемому");
+    }
+
+    @Test
+    public void testUserNumberSpan() {
+        paymentBlock.fillPaymentForm(PHONE, AMOUNT, EMAIL);
+        paymentBlock.clickContinueButton();
+
+        String expectedTitle = "375" + PHONE;
+        String actualTitle = bepaidIframe.getUserNumberSpan();
+
+        assertEquals(expectedTitle, actualTitle, "Название блока не соответствует ожидаемому");
+    }
+
+    @Test
+    public void testBepaidPlaceholders() {
+        paymentBlock.fillPaymentForm(PHONE, AMOUNT, EMAIL);
+        paymentBlock.clickContinueButton();
+
+        Map<String, String> labels = bepaidIframe.getBepaidPlaceholders();
+
+        assertAll(
+                () -> assertEquals("Номер карты", labels.get("Номер карты")),
+                () -> assertEquals("Срок действия", labels.get("Срок действия")),
+                () -> assertEquals("Имя и фамилия на карте", labels.get("ФИО на карте")),
+                () -> assertEquals("CVC", labels.get("CVC"))
+        );
+    }
+
+    @Test
+    public void checkBepaidPaymentIcons() {
+        paymentBlock.fillPaymentForm(PHONE, AMOUNT, EMAIL);
+        paymentBlock.clickContinueButton();
+        var icons = bepaidIframe.getBepaidPaymentIcons();
+
+        for (var icon : icons) {
+            System.out.println(icon.getAttribute("class"));
+            assertTrue(icon.isDisplayed(), "Иконка не отображается");
+        }
+    }
 
     @AfterEach
     public void tearDown() {
