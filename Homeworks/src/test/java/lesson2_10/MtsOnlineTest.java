@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.Map;
 
@@ -12,7 +13,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MtsOnlineTest {
     private static WebDriver driver;
     private static MainPage mainPage;
-    private static PaymentPage paymentPage;
+    private static PaymentBlock paymentBlock;
+    private static BepaidIframe bepaidIframe;
+    private Actions actions;
+
+    private final String PHONE = "297777777";
+    private final String AMOUNT = "1.00";
+    private final String EMAIL = "RibkaKus@gmail.com";
 
     @BeforeAll
     public static void setupClass() {
@@ -22,11 +29,17 @@ public class MtsOnlineTest {
     @BeforeEach
     public void setup() {
         driver = new ChromeDriver();
+        actions = new Actions(driver);
         driver.manage().window().maximize();
-        driver.get("https://www.mts.by/");
+//        driver.get("https://www.mts.by/");
+        mainPage = new MainPage(driver, actions);
+        paymentBlock = new PaymentBlock(driver, actions);
+        bepaidIframe = new BepaidIframe(driver,actions);
 
-        mainPage = new MainPage(driver);
-        paymentPage = new PaymentPage(driver);
+        actions.pause(1000)
+                .build()
+                .perform();
+        driver.get("https://www.mts.by/");
 
         mainPage.acceptCookies();
     }
@@ -34,7 +47,7 @@ public class MtsOnlineTest {
     @Test
     public void testBlockTitle() {
         String expectedTitle = "Онлайн пополнение\nбез комиссии";
-        String actualTitle = paymentPage.getBlockTitleText();
+        String actualTitle = paymentBlock.getBlockTitleText();
 
         System.out.println("Найден заголовок: " + actualTitle);
         assertEquals(expectedTitle, actualTitle, "Название блока не соответствует ожидаемому");
@@ -42,7 +55,7 @@ public class MtsOnlineTest {
 
     @Test
     public void checkPaymentIcons() {
-        var icons = paymentPage.getPaymentIcons();
+        var icons = paymentBlock.getPaymentIcons();
 
         System.out.println("Найдено иконок платежных систем: " + icons.size());
         for (var icon : icons) {
@@ -53,31 +66,29 @@ public class MtsOnlineTest {
 
     @Test
     public void checkLink() {
-        String href = paymentPage.getDetailsLinkHref();
+        String href = paymentBlock.getDetailsLinkHref();
         System.out.println("Href: " + href);
-
         assertTrue(href.contains("mts.by"), "Ссылка ведет на внешний ресурс");
 
-        paymentPage.clickDetailsLink();
+        paymentBlock.clickDetailsLink();
         assertTrue(driver.getTitle().contains("Порядок оплаты и безопасность интернет платежей"),
                 "Не та страница");
-
         System.out.println("Открыта нужная страница. Title: " + driver.getTitle());
     }
 
     @Test
     public void testPaymentForm() {
-        paymentPage.fillPaymentForm("297777777", "1", "RibkaKus@gmail.com");
-        assertTrue(paymentPage.isContinueButtonEnabled(),"Кнопка должна быть активна после заполнения формы");
-        paymentPage.clickContinueButton();
-        assertTrue(paymentPage.isPaymentPopupDisplayed(),
+        paymentBlock.fillPaymentForm(PHONE, AMOUNT, EMAIL);
+        assertTrue(paymentBlock.isContinueButtonEnabled(), "Кнопка должна быть активна после заполнения формы");
+        paymentBlock.clickContinueButton();
+        assertTrue(paymentBlock.isPaymentPopupDisplayed(),
                 "Попап оплаты должен отображаться после нажатия кнопки 'Продолжить'");
     }
 
     @Test
     public void testCommunicationServicesPlaceholders() {
-        paymentPage.selectService("Услуги связи");
-        Map<String, String> placeholders = paymentPage.getFieldPlaceholders();
+        paymentBlock.selectService("Услуги связи");
+        Map<String, String> placeholders = paymentBlock.getFieldPlaceholders();
 
         assertAll(
                 () -> assertEquals("Номер телефона", placeholders.get("Телефон"),
@@ -91,8 +102,8 @@ public class MtsOnlineTest {
 
     @Test
     public void testHomeInternetPlaceholders() {
-        paymentPage.selectService("Домашний интернет");
-        Map<String, String> placeholders = paymentPage.getFieldPlaceholders();
+        paymentBlock.selectService("Домашний интернет");
+        Map<String, String> placeholders = paymentBlock.getFieldPlaceholders();
 
         assertAll(
                 () -> assertEquals("Номер абонента", placeholders.get("Номер абонента")),
@@ -103,8 +114,8 @@ public class MtsOnlineTest {
 
     @Test
     public void testInstallmentPlaceholders() {
-        paymentPage.selectService("Рассрочка");
-        Map<String, String> placeholders = paymentPage.getFieldPlaceholders();
+        paymentBlock.selectService("Рассрочка");
+        Map<String, String> placeholders = paymentBlock.getFieldPlaceholders();
 
         assertAll(
                 () -> assertEquals("Номер счета на 44", placeholders.get("Номер счета на 44")),
@@ -115,8 +126,8 @@ public class MtsOnlineTest {
 
     @Test
     public void testDebtPlaceholders() {
-        paymentPage.selectService("Задолженность");
-        Map<String, String> placeholders = paymentPage.getFieldPlaceholders();
+        paymentBlock.selectService("Задолженность");
+        Map<String, String> placeholders = paymentBlock.getFieldPlaceholders();
 
         assertAll(
                 () -> assertEquals("Номер счета на 2073", placeholders.get("Номер счета на 2073")),
@@ -125,10 +136,23 @@ public class MtsOnlineTest {
         );
     }
 
+    @Test
+    public void testPaymentPrice() {
+        paymentBlock.fillPaymentForm(PHONE, AMOUNT, EMAIL);
+        paymentBlock.clickContinueButton();
+
+        String expectedTitle = AMOUNT + " BYN";
+        String actualTitle = bepaidIframe.getPaymentAmount();
+
+        assertEquals(expectedTitle, actualTitle, "Название блока не соответствует ожидаемому");
+    }
+
+
     @AfterEach
     public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+        actions.pause(500)
+                .build()
+                .perform();
+        driver.quit();
     }
 }

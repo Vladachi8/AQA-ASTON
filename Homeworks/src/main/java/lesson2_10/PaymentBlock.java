@@ -3,6 +3,7 @@ package lesson2_10;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
@@ -13,7 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PaymentPage extends BasePage {
+public class PaymentBlock extends BasePage {
+    private final Actions actions;
+
     @FindBy(xpath = "//div[@class='pay__wrapper']/h2")
     private WebElement blockTitle;
 
@@ -71,8 +74,10 @@ public class PaymentPage extends BasePage {
     @FindBy(xpath  = "//div[@class='select__wrapper']/button")
     private WebElement servicesDropdown;
 
-    public PaymentPage(WebDriver driver) {
+    public PaymentBlock(WebDriver driver, Actions actions) {
         super(driver);
+        this.actions = actions;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         PageFactory.initElements(driver, this);
     }
 
@@ -120,11 +125,20 @@ public class PaymentPage extends BasePage {
     }
 
     public void selectService(String serviceName) {
-        servicesDropdown.click();
-        WebElement option = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
-                        String.format("//ul[@class='select__list']/li[contains(., '%s')]", serviceName))
-        ));
-        option.click();
+        actions.moveToElement(servicesDropdown)
+                .pause(300)
+                .click()
+                .pause(500)
+                .perform();
+
+        WebElement option = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath(String.format("//ul[@class='select__list']/li[contains(., '%s')]", serviceName))));
+
+        actions.moveToElement(option)
+                .pause(300)
+                .click()
+                .pause(500)
+                .perform();
     }
 
     public Map<String, String> getFieldPlaceholders() {
