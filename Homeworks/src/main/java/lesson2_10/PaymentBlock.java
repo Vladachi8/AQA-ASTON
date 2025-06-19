@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +72,7 @@ public class PaymentBlock extends BasePage {
     @FindBy(xpath = "//div[@class='app-wrapper__content']")
     private WebElement paymentPopup;
 
-    @FindBy(xpath  = "//div[@class='select__wrapper']/button")
+    @FindBy(xpath = "//div[@class='select__wrapper']/button")
     private WebElement servicesDropdown;
 
     public PaymentBlock(WebDriver driver, Actions actions) {
@@ -126,9 +127,7 @@ public class PaymentBlock extends BasePage {
 
     public void selectService(String serviceName) {
         actions.moveToElement(servicesDropdown)
-                .pause(500)
                 .click()
-                .pause(500)
                 .build()
                 .perform();
 
@@ -136,9 +135,7 @@ public class PaymentBlock extends BasePage {
                 By.xpath(String.format("//ul[@class='select__list']/li[contains(., '%s')]", serviceName))));
 
         actions.moveToElement(option)
-                .pause(500)
                 .click()
-                .pause(500)
                 .perform();
     }
 

@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
@@ -23,10 +24,10 @@ public class MainPage extends BasePage {
 
     public void acceptCookies() {
         try {
+            new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(cookieAcceptButton));
+
             actions.moveToElement(cookieAcceptButton)
-                    .pause(2000)
                     .click()
-                    .pause(2000)
                     .build()
                     .perform();
         } catch (Exception e) {

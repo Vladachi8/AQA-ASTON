@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MtsOnlineTest {
@@ -188,7 +189,6 @@ public class MtsOnlineTest {
         var icons = bepaidIframe.getBepaidPaymentIcons();
 
         for (var icon : icons) {
-            System.out.println(icon.getAttribute("class"));
             assertTrue(icon.isDisplayed(), "Иконка не отображается");
         }
     }
