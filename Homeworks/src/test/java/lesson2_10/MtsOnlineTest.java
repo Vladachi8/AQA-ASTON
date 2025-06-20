@@ -3,7 +3,6 @@ package lesson2_10;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -28,11 +27,15 @@ public class MtsOnlineTest {
     private final String EMAIL = "RibkaKus@gmail.com";
 
     @BeforeAll
+    @Step("Настройка драйвера")
+    @DisplayName("Инициализация WebDriverManager")
     public static void setupClass() {
         WebDriverManager.chromedriver().setup();
     }
 
     @BeforeEach
+    @Step("Подготовка тестового окружения")
+    @DisplayName("Инициализация теста")
     public void setup() {
         driver = new ChromeDriver();
         allureExtension = new AllureReportExtension(driver);
@@ -53,11 +56,13 @@ public class MtsOnlineTest {
     @Test
     @DisplayName("Проверка заголовка платежного блока")
     @Description("Тест проверяет, что заголовок блока соответствует ожидаемому")
+    @Story("Пользователь видит корректный заголовок блока")
+    @Severity(SeverityLevel.TRIVIAL)
     public void testBlockTitle() {
         String expectedTitle = "Онлайн пополнение\nбез комиссии";
         String actualTitle = paymentBlock.getBlockTitleText();
 
-        System.out.println("Найден заголовок: " + actualTitle);
+        Allure.addAttachment("Заголовок", "text/plain", actualTitle);
         Allure.step("Проверка заголовка", () -> {
             assertEquals(expectedTitle, actualTitle, "Название блока не соответствует ожидаемому");
         });
@@ -65,10 +70,13 @@ public class MtsOnlineTest {
 
     @Test
     @DisplayName("Проверка иконок платежных систем")
+    @Description("Тест проверяет отображение иконок платежных систем")
+    @Story("Пользователь видит все иконки платежных систем")
+    @Severity(SeverityLevel.NORMAL)
     public void checkPaymentIcons() {
         var icons = paymentBlock.getPaymentIcons();
 
-        System.out.println("Найдено иконок платежных систем: " + icons.size());
+        Allure.addAttachment("Количество иконок", "text/plain", "Найдено: " + icons.size());
         Allure.step("Проверка отображения иконок", () -> {
             for (var icon : icons) {
                 System.out.println(icon.getAttribute("alt"));
@@ -78,6 +86,10 @@ public class MtsOnlineTest {
     }
 
     @Test
+    @DisplayName("Проверка ссылки платежного блока")
+    @Description("Тест проверяет, что ссылка блока ведет на ожидаемый ресурс")
+    @Story("Пользователь может перейти по ссылке 'Подробнее'")
+    @Severity(SeverityLevel.TRIVIAL)
     public void checkLink() {
         String href = paymentBlock.getDetailsLinkHref();
         System.out.println("Href: " + href);
@@ -90,6 +102,8 @@ public class MtsOnlineTest {
     }
 
     @Test
+    @DisplayName("Проверка всплывающего окна")
+    @Description("Тест проверяет, что после введения валидных данных, отображается всплывающее окно")
     public void testPaymentForm() {
         paymentBlock.fillPaymentForm(PHONE, AMOUNT, EMAIL);
         assertTrue(paymentBlock.isContinueButtonEnabled(), "Кнопка должна быть активна после заполнения формы");
@@ -99,6 +113,8 @@ public class MtsOnlineTest {
     }
 
     @Test
+    @DisplayName("Проверка надписей в полях для пункта 'Услуги связи' платежного блока")
+    @Description("Тест проверяет, что надписи в полях соответствуют спецификации")
     public void testCommunicationServicesPlaceholders() {
         paymentBlock.selectService("Услуги связи");
         Map<String, String> placeholders = paymentBlock.getFieldPlaceholders();
@@ -114,6 +130,8 @@ public class MtsOnlineTest {
     }
 
     @Test
+    @DisplayName("Проверка надписей в полях для пункта 'Домашний интернет' платежного блока")
+    @Description("Тест проверяет, что надписи в полях соответствуют спецификации")
     public void testHomeInternetPlaceholders() {
         paymentBlock.selectService("Домашний интернет");
         Map<String, String> placeholders = paymentBlock.getFieldPlaceholders();
@@ -126,6 +144,8 @@ public class MtsOnlineTest {
     }
 
     @Test
+    @DisplayName("Проверка надписей в полях для пункта 'Рассрочка' платежного блока")
+    @Description("Тест проверяет, что надписи в полях соответствуют спецификации")
     public void testInstallmentPlaceholders() {
         paymentBlock.selectService("Рассрочка");
         Map<String, String> placeholders = paymentBlock.getFieldPlaceholders();
@@ -138,6 +158,8 @@ public class MtsOnlineTest {
     }
 
     @Test
+    @DisplayName("Проверка надписей в полях для пункта 'Задолженность' платежного блока")
+    @Description("Тест проверяет, что надписи в полях соответствуют спецификации")
     public void testDebtPlaceholders() {
         paymentBlock.selectService("Задолженность");
         Map<String, String> placeholders = paymentBlock.getFieldPlaceholders();
@@ -150,6 +172,8 @@ public class MtsOnlineTest {
     }
 
     @Test
+    @DisplayName("Проверка цены указанной при заполнении на титульнике окна оплаты")
+    @Description("Тест проверяет, что надпись на титульнике соответствуют введенной пользователем ранее")
     public void testPaymentPriceTitle() {
         paymentBlock.fillPaymentForm(PHONE, AMOUNT, EMAIL);
         paymentBlock.clickContinueButton();
@@ -209,6 +233,8 @@ public class MtsOnlineTest {
     }
 
     @AfterEach
+    @Step("Завершение теста")
+    @DisplayName("Закрытие браузера")
     public void tearDown() {
         actions.pause(500)
                 .build()
