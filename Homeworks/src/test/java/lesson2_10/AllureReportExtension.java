@@ -10,10 +10,10 @@ import java.io.ByteArrayInputStream;
 import java.util.Optional;
 
 public class AllureReportExtension implements TestWatcher {
-    private static WebDriver driver;
+    private WebDriver driver;
 
-    public static void setDriver(WebDriver driver) {
-        AllureReportExtension.driver = driver;
+    public void setDriver(WebDriver driver) {
+        this.driver = driver;
     }
 
     @Override
@@ -27,25 +27,26 @@ public class AllureReportExtension implements TestWatcher {
                         new ByteArrayInputStream(screenshot),
                         "png"
                 );
+                Allure.addAttachment("Ошибка", "text/plain", cause.getMessage());
             } catch (Exception e) {
-                Allure.step("Ошибка создания скриншота: " + e.getMessage());
+                Allure.step("Ошибка при создании скриншота: " + e.getMessage());
             }
         }
         Allure.step("Тест упал: " + context.getDisplayName());
     }
 
-    @Override
-    public void testDisabled(ExtensionContext context, Optional<String> reason) {
-        TestWatcher.super.testDisabled(context, reason);
-    }
-
-    @Override
-    public void testSuccessful(ExtensionContext context) {
-        TestWatcher.super.testSuccessful(context);
-    }
-
-    @Override
-    public void testAborted(ExtensionContext context, Throwable cause) {
-        TestWatcher.super.testAborted(context, cause);
-    }
+//    @Override
+//    public void testDisabled(ExtensionContext context, Optional<String> reason) {
+//        TestWatcher.super.testDisabled(context, reason);
+//    }
+//
+//    @Override
+//    public void testSuccessful(ExtensionContext context) {
+//        TestWatcher.super.testSuccessful(context);
+//    }
+//
+//    @Override
+//    public void testAborted(ExtensionContext context, Throwable cause) {
+//        TestWatcher.super.testAborted(context, cause);
+//    }
 }
